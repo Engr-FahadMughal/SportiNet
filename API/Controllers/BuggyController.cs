@@ -15,7 +15,7 @@ namespace API.Controllers
         [HttpGet]
         public ActionResult GetNotFoundRequest()
         {
-            var thing = _context.Products.Find(99);
+            var thing = _context.Products.Find();
 
             if (thing == null)
             {
@@ -27,7 +27,7 @@ namespace API.Controllers
         [HttpGet]
         public ActionResult GetServerError()
         {
-            var thing = _context.Products.Find(99);
+            var thing = _context.Products.Find();
 
             var thindToReturn = thing.ToString();
 
