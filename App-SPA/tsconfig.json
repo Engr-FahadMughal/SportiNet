@@ -7,7 +7,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true,    
+    // "strictPropertyInitialization": false, // enforce the compiler to ignore the property initializer.
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
