@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IPagination } from '../shared/models/pagination';
 import { map } from 'rxjs/operators';
+import { IProduct } from '../shared/models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,9 @@ export class ShopService {
 
   getProductType() {
     return this.httpClient.get<IProductType[]>(this.baseUrl + 'products/getproducttypes');
+  }
+
+  getProduct(id: number){
+    return this.httpClient.get<IProduct>(this.baseUrl + 'products/getproduct/' + id);
   }
 }
