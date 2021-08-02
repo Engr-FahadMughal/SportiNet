@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false, // ignore the null checking
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,    
     // "strictPropertyInitialization": false, // enforce the compiler to ignore the property initializer.

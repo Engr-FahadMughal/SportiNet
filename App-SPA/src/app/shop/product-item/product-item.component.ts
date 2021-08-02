@@ -1,3 +1,4 @@
+import { BasketService } from './../../basket/basket.service';
 import { IProduct } from './../../shared/models/product';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -11,9 +12,13 @@ export class ProductItemComponent implements OnInit {
   @Input()  product!: IProduct; // ! definite assignment assertion: telling the typescript that value is not null or undefined.
   // @Input()  product?: IProduct; // value is undefined.
 
-  constructor() { }
+  constructor(private basketService: BasketService) { }
 
   ngOnInit(): void {
+  }
+
+  addItemToBasket() {
+    this.basketService.addItemToBasket(this.product);
   }
 
 }

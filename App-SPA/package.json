@@ -21,11 +21,13 @@
     "bootstrap": "^5.0.2",
     "bootswatch": "^5.0.2",
     "font-awesome": "^4.7.0",
+    "guid-typescript": "^1.0.9",
     "ngx-bootstrap": "^6.2.0",
     "ngx-spinner": "^12.0.0",
     "ngx-toastr": "^14.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
+    "uuid": "^8.3.2",
     "xng-breadcrumb": "^6.7.0",
     "zone.js": "~0.11.4"
   },
