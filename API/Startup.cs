@@ -2,6 +2,7 @@ using API.Extensions;
 using API.Helpers;
 using API.Middleware;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,10 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<StoreContext>(x => 
                 x.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseSqlite(_configuration.GetConnectionString("IdentityConnection"));
+            });
             services.AddSingleton<IConnectionMultiplexer>(c => {
                 var configuration = ConfigurationOptions.Parse(_configuration.GetConnectionString("Redis"), true);
                 return ConnectionMultiplexer.Connect(configuration);
@@ -52,8 +57,9 @@ namespace API
             //         return new BadRequestObjectResult(errorResponse);
             //     };
             // });
-            // add the custom services extension class to use services
+            // add the custom services extension methods to use services
             services.AddApplicationServices();
+            services.AddIdentityServices(_configuration);
             services.AddSwaggerDocumentation();
             // services.AddSwaggerGen(c => 
             // {
@@ -86,6 +92,7 @@ namespace API
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwaggerDocumentation();
