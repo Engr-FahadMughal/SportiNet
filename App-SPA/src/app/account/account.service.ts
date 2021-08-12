@@ -1,3 +1,4 @@
+import { IAddress } from './../shared/models/address';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IUser } from './../shared/models/user';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
@@ -67,4 +68,12 @@ export class AccountService {
       })
     );
   }  
+
+  getUserAddress() {
+    return this.httpClient.get<IAddress>(this.baseUrl + 'account/GetUserAddress');
+  }
+
+  updateUserAddress(address: IAddress) {
+    return this.httpClient.put<IAddress>(this.baseUrl + 'account/UpdateUserAddress', address);
+  }
 }

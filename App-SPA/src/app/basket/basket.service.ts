@@ -1,3 +1,4 @@
+import { IDeliveryMethod } from './../shared/models/deliveryMethod';
 import { IProduct } from './../shared/models/product';
 import { HttpClient } from '@angular/common/http';
 import { Basket, IBasket, IBasketItem, IBasketTotals } from './../shared/models/basket';
@@ -18,8 +19,14 @@ export class BasketService {
   //@ts-ignore
   private basketTotalSource = new BehaviorSubject<IBasketTotals>(null);
   basketTotal$ = this.basketTotalSource.asObservable();
+  shipping = 0;
 
   constructor(private httpClient: HttpClient) { }
+
+  setShippingPrice(deliveryMethod: IDeliveryMethod) {
+    this.shipping = deliveryMethod.price;
+    this.calculateTotals();
+  }
 
   getBasket(id: string) {
     return this.httpClient.get<IBasket>(this.baseUrl + 'basket/GetBasketById?id=' + id)
@@ -88,6 +95,13 @@ export class BasketService {
     }
   }
 
+  deleteLocalBasket(id: string)
+  {
+    this.basketSource.next(null);
+    this.basketTotalSource.next(null);
+    localStorage.removeItem('basket_id');
+  }
+  
   deleteBasket(basket: IBasket) {
     this.httpClient.delete(this.baseUrl + 'basket/DeleteBasket?id=' + basket.id).subscribe(() => {
       this.basketSource.next(null); //to set interface null: one option is to turn stric: false in tsconfig.json
@@ -130,7 +144,7 @@ export class BasketService {
 
   private calculateTotals() {
     const basket = this.getCurrentBasketValue();
-    const shipping = 0;
+    const shipping = this.shipping;
     const subtotal = basket.items.reduce((n, i) => (i.price * i.quantity) + n, 0); // n is the return number of accamulated function of reduce() & i is the item in the array & 0 is the initialized value of n.
     const total = subtotal + shipping;
     this.basketTotalSource.next({shipping, total, subtotal});
